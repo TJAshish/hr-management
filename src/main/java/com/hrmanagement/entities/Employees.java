@@ -44,6 +44,7 @@ public class Employees {
 	private String lastCompany;
 	private String contact;
 	private String emgContact;
+	private String photo;
 	private String employeeImageUrl;
 	private Integer basicSalary;
 	private Integer hra;

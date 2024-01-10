@@ -1,18 +1,27 @@
 package com.hrmanagement.controllers;
 
-import com.hrmanagement.entities.Employees;  
+import com.hrmanagement.entities.Employees;   
 import com.hrmanagement.service.EmployeesService;
+import com.hrmanagement.service.FileService;
+
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.StreamUtils;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -21,6 +30,12 @@ public class EmployeesController {
 
 	@Autowired
 	private  EmployeesService employeesService;
+	
+	@Autowired
+	private FileService fileService;
+
+	@Value("${apis.image}")
+	private String path;
 	
 	@PostMapping("/{clientId}")
     public ResponseEntity<Employees> createEmployee(@RequestBody Employees employee,
@@ -71,6 +86,31 @@ public class EmployeesController {
         List<Employees> employees = employeesService.searchEmployeesByKeyword(keyword);
         return ResponseEntity.ok(employees);
     }
+	// post image upload
+	
+			@PostMapping("/image/upload/{empId}/{clientId}")
+			public ResponseEntity<Employees> uploadImage(
+					@RequestParam ("image") MultipartFile image,
+					@PathVariable Integer empId,
+					@PathVariable Integer clientId
+					)throws IOException
+			{
+				Employees emp = this.employeesService.getEmployeeByIdAndClientId(empId, clientId);
+				String fileName = this.fileService.uploadImage(path, image);
+				emp.setPhoto(fileName);
+				Employees updateEmp = this.employeesService.updateEmployee(empId,clientId, emp);
+				return new ResponseEntity<Employees>(updateEmp,HttpStatus.OK);
+			}
+			//method to server files
+			
+			@GetMapping(value ="/image/{imageName}")
+			public void downloadImage(@Valid
+					@PathVariable("imageName") String imageNmae,HttpServletResponse response
+					)throws IOException {
+				InputStream resource = this.fileService.getResource(path, imageNmae);
+				response.setContentType(MediaType.IMAGE_JPEG_VALUE);
+				StreamUtils.copy(resource, response.getOutputStream());
+				}
 
 
 }
