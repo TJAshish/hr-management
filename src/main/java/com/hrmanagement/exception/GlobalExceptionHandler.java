@@ -23,5 +23,15 @@ public class GlobalExceptionHandler {
 	    public ResponseEntity<String> handleEmployeeNotFoundException(EmployeeNotFoundException e) {
 	        return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
 	    }
+	  @ExceptionHandler(SalaryDetailsNotFoundException.class)
+	    @ResponseStatus(HttpStatus.NOT_FOUND)
+	    public ResponseEntity<String> handleSalaryDetailsNotFoundException(SalaryDetailsNotFoundException e) {
+	        return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+	    }
+	  @ExceptionHandler(NotFoundException.class)
+	  @ResponseStatus(HttpStatus.NOT_FOUND)
+	    public ResponseEntity<String> handleNotFoundException(NotFoundException e) {
+	        return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+	    }
 }
 

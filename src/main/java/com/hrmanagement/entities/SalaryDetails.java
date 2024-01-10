@@ -6,23 +6,28 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import lombok.Data;
 
-@Entity
 @Data
+@Entity
+
 public class SalaryDetails {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer sdId; 
+	
+    private Integer clientId;
+    
 
-    @OneToOne(targetEntity = Years.class)
+    @ManyToOne(targetEntity = Years.class)
     private Years financialYear;
 
-    @OneToOne(targetEntity = Months.class)
+    @ManyToOne(targetEntity = Months.class)
     private Months month;
     
     @OneToOne(targetEntity = Department.class)

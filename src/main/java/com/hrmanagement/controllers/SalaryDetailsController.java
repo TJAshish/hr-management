@@ -1,52 +1,57 @@
 package com.hrmanagement.controllers;
 
+import com.hrmanagement.entities.SalaryDetails;
+import com.hrmanagement.service.SalaryDetailsService;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import com.hrmanagement.entities.SalaryDetails;
-import com.hrmanagement.service.SalaryDetailsService;
-
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/salary-details")
+@RequestMapping("/salary-details")
 public class SalaryDetailsController {
 
     @Autowired
     private SalaryDetailsService salaryDetailsService;
 
-    @GetMapping
-    public ResponseEntity<List<SalaryDetails>> getAllSalaryDetails() {
-        List<SalaryDetails> salaryDetailsList = salaryDetailsService.getSalaryDetails();
-        return new ResponseEntity<>(salaryDetailsList, HttpStatus.OK);
-    }
-
-    @GetMapping("/{id}")
-    public ResponseEntity<SalaryDetails> getSalaryDetailsById(@PathVariable Integer id) {
-        SalaryDetails salaryDetails = salaryDetailsService.getSalaryDetailsById(id);
-        return new ResponseEntity<>(salaryDetails, HttpStatus.OK);
-    }
-
-    @PostMapping
-    public ResponseEntity<SalaryDetails> createSalaryDetails(@RequestBody SalaryDetails salaryDetails) {
-        SalaryDetails createdSalaryDetails = salaryDetailsService.createSalaryDetails(salaryDetails);
+    @PostMapping("/{clientId}")
+    public ResponseEntity<SalaryDetails> createSalaryDetails(@RequestBody SalaryDetails salaryDetails, @PathVariable Integer clientId) {
+        SalaryDetails createdSalaryDetails = salaryDetailsService.createSalaryDetails(salaryDetails, clientId);
         return new ResponseEntity<>(createdSalaryDetails, HttpStatus.CREATED);
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<SalaryDetails> updateSalaryDetails(
-            @PathVariable Integer id,
-            @RequestBody SalaryDetails updatedSalaryDetails) {
-        SalaryDetails updatedDetails = salaryDetailsService.updateSalaryDetails(id, updatedSalaryDetails);
-        return new ResponseEntity<>(updatedDetails, HttpStatus.OK);
+    @GetMapping("/{sdId}/{clientId}")
+    public ResponseEntity<SalaryDetails> getSalaryDetailsByIdAndClientId(@PathVariable Integer sdId, @PathVariable Integer clientId) {
+        SalaryDetails salaryDetails = salaryDetailsService.getSalaryDetailsByIdAndClientId(sdId, clientId);
+        return ResponseEntity.ok(salaryDetails);
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteSalaryDetails(@PathVariable Integer id) {
-        salaryDetailsService.deleteSalaryDetails(id);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    @GetMapping("/{clientId}")
+    public ResponseEntity<Page<SalaryDetails>> getAllSalaryDetailsByClientId(@PathVariable("clientId") Integer clientId,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
+
+        Pageable pageable = PageRequest.of(page, size); {
+        Page<SalaryDetails> salaryDetailsPage = salaryDetailsService.getAllSalaryDetailsByClientId(clientId, pageable);
+        return ResponseEntity.ok(salaryDetailsPage);
+    }
+    }
+
+    @PutMapping("/{sdId}/{clientId}")
+    public ResponseEntity<SalaryDetails> updateSalaryDetails(@PathVariable Integer sdId, @PathVariable Integer clientId, @RequestBody SalaryDetails updatedSalaryDetails) {
+        SalaryDetails updatedDetails = salaryDetailsService.updateSalaryDetails(sdId, clientId, updatedSalaryDetails);
+        return ResponseEntity.ok(updatedDetails);
+    }
+
+    @DeleteMapping("/{sdId}/{clientId}")
+    public ResponseEntity<String> deleteSalaryDetailsByIdAndClientId(@PathVariable Integer sdId, @PathVariable Integer clientId) {
+        salaryDetailsService.deleteSalaryDetailsByIdAndClientId(sdId, clientId);
+        return ResponseEntity.ok("SalaryDetails deleted successfully");
     }
 }
-

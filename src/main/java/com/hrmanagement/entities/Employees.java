@@ -1,10 +1,14 @@
 package com.hrmanagement.entities;
 
+import java.util.Date;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import lombok.Data;
 
@@ -24,12 +28,14 @@ public class Employees {
 	private Integer code;
 	private String userName;
 	private String password;
-	private Integer adharNo;
+	private Long adharNo;
 	private String fullName;
 	private String fatherName;
 	private String subject;
-	private String dob;
-	private String joiningDate;
+	@Temporal(TemporalType.DATE)
+	private Date dob;
+	@Temporal(TemporalType.DATE)
+	private Date joiningDate;
 	private String education;
 	private String email;
 	private String currentAddress;
@@ -38,7 +44,7 @@ public class Employees {
 	private String lastCompany;
 	private String contact;
 	private String emgContact;
-	private String photo;
+	private String employeeImageUrl;
 	private Integer basicSalary;
 	private Integer hra;
 	private Integer petrolconv;
