@@ -3,6 +3,9 @@ package com.hrmanagement.controllers;
 import com.hrmanagement.entities.LeaveDetails;
 import com.hrmanagement.exception.NotFoundException;
 import com.hrmanagement.service.LeaveDetailsService;
+
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -27,7 +30,7 @@ public class LeaveDetailsController {
     @GetMapping("/{clientId}")
     public ResponseEntity<Page<LeaveDetails>> getAllLeaveDetailsByClientId(@PathVariable("clientId") Integer clientId,
                                                                           @RequestParam(defaultValue = "0") int page,
-                                                                          @RequestParam(defaultValue = "10") int size) {
+                                                                          @RequestParam int size) {
         Pageable pageable = PageRequest.of(page, size);
         Page<LeaveDetails> leaveDetailsPage = leaveDetailsService.getAllLeaveDetailsByClientId(clientId, pageable);
         return new ResponseEntity<>(leaveDetailsPage, HttpStatus.OK);
@@ -50,5 +53,9 @@ public class LeaveDetailsController {
     public ResponseEntity<Void> deleteLeaveDetails(@PathVariable Integer clientId, @PathVariable Integer id) {
         leaveDetailsService.deleteLeaveDetailsByIdAndClientId(id, clientId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+    @GetMapping("/search")
+    public ResponseEntity<List<LeaveDetails>> searchDetais(@RequestParam("query") String query){
+        return ResponseEntity.ok(leaveDetailsService.searchDetails(query));
     }
 }

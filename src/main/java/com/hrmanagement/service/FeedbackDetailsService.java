@@ -1,5 +1,6 @@
 package com.hrmanagement.service;
 
+import java.util.List; 
 import java.util.Optional;
 
 import org.springframework.data.domain.Page;
@@ -25,4 +26,8 @@ public class FeedbackDetailsService {
     public Page<FeedbackDetails> getAllFeedbackDetailsByClientId(Integer clientId, Pageable pageable) {
         return feedbackDetailsRepository.findByClientId(clientId, pageable);
     }
+    public List<FeedbackDetails> searchDetails(String query) {
+	        List<FeedbackDetails> feedbackDetails = feedbackDetailsRepository.searchDetails(query);
+	        return feedbackDetails;
+	    }
 }

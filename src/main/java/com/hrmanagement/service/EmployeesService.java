@@ -60,9 +60,13 @@ public class EmployeesService {
 	        }
 	        employeesRepository.deleteByEmpIdAndClientId(empId, clientId);
 	    }
-	    public List<Employees> searchEmployeesByKeyword(String keyword) {
-	        return employeesRepository.findByFullName(keyword);
-	        // You can add more search methods for other fields if needed
-	    }
+
+	 	  public List<Employees> searchEmployees(String query) {
+	 	        List<Employees> employees = employeesRepository.searchEmployees(query);
+	 	        return employees;
+	 	    }
+	 	 public List<Employees> findByClientId(Integer clientId) {
+	         return employeesRepository.findByClientId(clientId);
+	     }
 
 }

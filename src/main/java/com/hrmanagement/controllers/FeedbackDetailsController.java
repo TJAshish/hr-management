@@ -1,5 +1,7 @@
 package com.hrmanagement.controllers;
 
+import java.util.List; 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -37,6 +39,10 @@ public class FeedbackDetailsController {
     	FeedbackDetails feedbackDetails = feedbackDetailsService.getFeedbackDetailsByClientIdAndId(clientId, id)
                 .orElseThrow(() -> new NotFoundException("FeedbackDetails not found with id " + id + " for clientId " + clientId));
         return new ResponseEntity<>(feedbackDetails, HttpStatus.OK);
+    }
+    @GetMapping("/search")
+    public ResponseEntity<List<FeedbackDetails>> searchDetais(@RequestParam("query") String query){
+        return ResponseEntity.ok(feedbackDetailsService.searchDetails(query));
     }
 
 }

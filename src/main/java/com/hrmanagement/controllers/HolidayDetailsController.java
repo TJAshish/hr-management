@@ -1,8 +1,10 @@
 package com.hrmanagement.controllers;
 
 import com.hrmanagement.entities.HolidayDetails;
-import com.hrmanagement.exception.NotFoundException;
 import com.hrmanagement.service.HolidayDetailsService;
+
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -51,5 +53,9 @@ public class HolidayDetailsController {
     public ResponseEntity<Void> deleteHolidayDetails(@PathVariable Integer clientId, @PathVariable Integer id) {
         holidayDetailsService.deleteHolidayDetails(clientId, id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+    @GetMapping("/search")
+    public ResponseEntity<List<HolidayDetails>> searchDetais(@RequestParam("query") String query){
+        return ResponseEntity.ok(holidayDetailsService.searchDetails(query));
     }
 }

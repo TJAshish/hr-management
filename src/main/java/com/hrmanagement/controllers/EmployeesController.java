@@ -61,6 +61,12 @@ public class EmployeesController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
+    @GetMapping("/all/{clientId}")
+    public ResponseEntity<List<Employees>> getAllEmployees(
+    		@PathVariable("clientId") Integer clientId) {
+        	List<Employees> employees = employeesService.findByClientId(clientId);
+        return new ResponseEntity<>(employees, HttpStatus.OK);
+    }
 
     @GetMapping("/{clientId}")
     public ResponseEntity<Page<Employees>> getAllEmployees(
@@ -81,10 +87,9 @@ public class EmployeesController {
         return new ResponseEntity<>("Employee deleted successfully", HttpStatus.OK);
     }
 
-	@GetMapping("/search")
-    public ResponseEntity<List<Employees>> searchEmployees(@RequestParam String keyword) {
-        List<Employees> employees = employeesService.searchEmployeesByKeyword(keyword);
-        return ResponseEntity.ok(employees);
+    @GetMapping("/search")
+    public ResponseEntity<List<Employees>> searchEmployees(@RequestParam("query") String query){
+        return ResponseEntity.ok(employeesService.searchEmployees(query));
     }
 	// post image upload
 	

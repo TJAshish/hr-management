@@ -54,4 +54,8 @@ public class SalaryDetailsController {
         salaryDetailsService.deleteSalaryDetailsByIdAndClientId(sdId, clientId);
         return ResponseEntity.ok("SalaryDetails deleted successfully");
     }
+    @GetMapping("/search")
+    public ResponseEntity<List<SalaryDetails>> searchDetais(@RequestParam("query") String query){
+        return ResponseEntity.ok(salaryDetailsService.searchDetails(query));
+    }
 }

@@ -10,6 +10,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -55,5 +56,9 @@ public class HolidayDetailsService {
         } else {
             throw new NotFoundException("HolidayDetails not found");
         }
+    }
+    public List<HolidayDetails> searchDetails(String query) {
+        List<HolidayDetails> holidayDetails = holidayDetailsRepository.searchDetails(query);
+        return holidayDetails;
     }
 }

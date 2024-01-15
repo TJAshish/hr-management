@@ -4,6 +4,8 @@ import com.hrmanagement.entities.SalaryDetails;
 import com.hrmanagement.exception.SalaryDetailsNotFoundException;
 import com.hrmanagement.repositories.SalaryDetailsRepository;
 
+import java.util.List;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -56,5 +58,9 @@ public class SalaryDetailsService {
             throw new SalaryDetailsNotFoundException("SalaryDetails not found for sdId: " + sdId + " and clientId: " + clientId);
         }
         salaryDetailsRepository.deleteBySdIdAndClientId(sdId, clientId);
+    }
+    public List<SalaryDetails> searchDetails(String query) {
+        List<SalaryDetails> salaryDetails = salaryDetailsRepository.searchDetails(query);
+        return salaryDetails;
     }
 }

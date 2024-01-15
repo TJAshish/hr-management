@@ -21,7 +21,7 @@ public class FeedbackDetails {
 	    
 	    private Integer clientId;
 
-	    private String details;
+	    private String studentDetails;
 
 	    private String title;
 
