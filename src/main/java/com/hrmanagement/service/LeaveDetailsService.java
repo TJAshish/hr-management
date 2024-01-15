@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -49,7 +50,9 @@ public class LeaveDetailsService {
             throw new NotFoundException("LeaveDetails not found with id " + id + " for clientId " + clientId);
         }
     }
+    
 
+    @Transactional
     public void deleteLeaveDetailsByIdAndClientId(Integer id, Integer clientId) {
         leaveDetailsRepository.deleteByIdAndClientId(id, clientId);
     }

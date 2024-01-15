@@ -52,7 +52,7 @@ public class HolidayDetailsController {
     @DeleteMapping("/{id}/{clientId}")
     public ResponseEntity<Void> deleteHolidayDetails(@PathVariable Integer clientId, @PathVariable Integer id) {
         holidayDetailsService.deleteHolidayDetails(clientId, id);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
     @GetMapping("/search")
     public ResponseEntity<List<HolidayDetails>> searchDetais(@RequestParam("query") String query){

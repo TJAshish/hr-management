@@ -52,7 +52,7 @@ public class LeaveDetailsController {
     @DeleteMapping("/{id}/{clientId}")
     public ResponseEntity<Void> deleteLeaveDetails(@PathVariable Integer clientId, @PathVariable Integer id) {
         leaveDetailsService.deleteLeaveDetailsByIdAndClientId(id, clientId);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
     @GetMapping("/search")
     public ResponseEntity<List<LeaveDetails>> searchDetais(@RequestParam("query") String query){
