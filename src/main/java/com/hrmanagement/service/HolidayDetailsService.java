@@ -59,8 +59,9 @@ public class HolidayDetailsService {
             throw new NotFoundException("HolidayDetails not found");
         }
     }
-    public List<HolidayDetails> searchDetails(String query) {
-        List<HolidayDetails> holidayDetails = holidayDetailsRepository.searchDetails(query);
-        return holidayDetails;
+    public Page<HolidayDetails> searchDetails(String query ,Pageable pageable) {
+    	return holidayDetailsRepository.searchDetails(query, pageable);
+        
+        		
     }
 }

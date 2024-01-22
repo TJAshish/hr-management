@@ -26,6 +26,6 @@ public interface SalaryDetailsRepository extends JpaRepository<SalaryDetails, In
             "LOWER(s.name) LIKE LOWER(CONCAT('%', :query, '%')) OR " +
             "LOWER(s.month) LIKE LOWER(CONCAT('%', :query, '%')) OR " +
             "LOWER(s.department) LIKE LOWER(CONCAT('%', :query, '%'))", nativeQuery = true)
-List<SalaryDetails> searchDetails(String query);
+Page<SalaryDetails> searchDetails(String query, Pageable pageable);
 
 }

@@ -1,10 +1,8 @@
 package com.hrmanagement.controllers;
 
-import com.hrmanagement.entities.LeaveDetails;
+import com.hrmanagement.entities.LeaveDetails; 
 import com.hrmanagement.exception.NotFoundException;
 import com.hrmanagement.service.LeaveDetailsService;
-
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -30,7 +28,7 @@ public class LeaveDetailsController {
     @GetMapping("/{clientId}")
     public ResponseEntity<Page<LeaveDetails>> getAllLeaveDetailsByClientId(@PathVariable("clientId") Integer clientId,
                                                                           @RequestParam(defaultValue = "0") int page,
-                                                                          @RequestParam int size) {
+                                                                          @RequestParam(defaultValue = "10") int size) {
         Pageable pageable = PageRequest.of(page, size);
         Page<LeaveDetails> leaveDetailsPage = leaveDetailsService.getAllLeaveDetailsByClientId(clientId, pageable);
         return new ResponseEntity<>(leaveDetailsPage, HttpStatus.OK);
@@ -55,7 +53,11 @@ public class LeaveDetailsController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
     @GetMapping("/search")
-    public ResponseEntity<List<LeaveDetails>> searchDetais(@RequestParam("query") String query){
-        return ResponseEntity.ok(leaveDetailsService.searchDetails(query));
+    public ResponseEntity<Page<LeaveDetails>> searchDetais(@RequestParam("query") String query,
+    		@RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
+
+        Pageable pageable = PageRequest.of(page, size);
+        return ResponseEntity.ok(leaveDetailsService.searchDetails(query,pageable));
     }
 }

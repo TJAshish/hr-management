@@ -56,9 +56,9 @@ public class LeaveDetailsService {
     public void deleteLeaveDetailsByIdAndClientId(Integer id, Integer clientId) {
         leaveDetailsRepository.deleteByIdAndClientId(id, clientId);
     }
-    public List<LeaveDetails> searchDetails(String query) {
-        List<LeaveDetails> leaveDetails = leaveDetailsRepository.searchDetails(query);
-        return leaveDetails;
+    public Page<LeaveDetails> searchDetails(String query, Pageable pageable) {
+    	return leaveDetailsRepository.searchDetails(query, pageable);
+         
     }
 
 }

@@ -55,7 +55,11 @@ public class HolidayDetailsController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
     @GetMapping("/search")
-    public ResponseEntity<List<HolidayDetails>> searchDetais(@RequestParam("query") String query){
-        return ResponseEntity.ok(holidayDetailsService.searchDetails(query));
+    public ResponseEntity<Page<HolidayDetails>> searchDetais(@RequestParam("query") String query,
+    		@RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
+
+        Pageable pageable = PageRequest.of(page, size);
+        return ResponseEntity.ok(holidayDetailsService.searchDetails(query,pageable));
     }
 }

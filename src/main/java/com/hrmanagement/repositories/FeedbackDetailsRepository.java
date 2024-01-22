@@ -1,6 +1,5 @@
 package com.hrmanagement.repositories;
 
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.domain.Page;
@@ -8,8 +7,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
-import org.springframework.data.repository.query.Param;
-
 import com.hrmanagement.entities.FeedbackDetails;
 
 @EnableJpaRepositories
@@ -20,7 +17,7 @@ public interface FeedbackDetailsRepository extends JpaRepository<FeedbackDetails
             "LOWER(f.title) LIKE LOWER(CONCAT('%', :query, '%')) OR " +
             "LOWER(f.studentDetails) LIKE LOWER(CONCAT('%', :query, '%')) OR " +
             "LOWER(f.feedback) LIKE LOWER(CONCAT('%', :query, '%'))", nativeQuery = true)
-List<FeedbackDetails> searchDetails(String query);
+Page<FeedbackDetails> searchDetails(String query ,Pageable pageable);
 
 }
 

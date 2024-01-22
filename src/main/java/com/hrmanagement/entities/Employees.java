@@ -3,12 +3,15 @@ package com.hrmanagement.entities;
 import java.util.Date;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 import lombok.Data;
 
@@ -22,8 +25,12 @@ public class Employees {
 	
 	private Integer clientId;
 	
-	@OneToOne(targetEntity = Department.class)
-	private Department departmentId;
+	@Transient
+//	@OneToOne(targetEntity = Department.class)
+	@ManyToOne(fetch = FetchType.EAGER)
+	private Department department;
+	
+	private String departmentName;
 	
 	private Integer code;
 	private String userName;
@@ -45,7 +52,6 @@ public class Employees {
 	private String contact;
 	private String emgContact;
 	private String photo;
-	private String employeeImageUrl;
 	private Integer basicSalary;
 	private Integer hra;
 	private Integer petrolconv;
@@ -54,11 +60,19 @@ public class Employees {
 	private Integer esic;
 	private Integer upa;
 	private Integer grossSalary;
-	@OneToOne(targetEntity = SalaryMode.class)
+	@Transient
+	@ManyToOne(fetch = FetchType.EAGER)
 	private SalaryMode salaryModeId;
+	
+	private String salaryMode;
+	
 	private String bankName;
 	private String accNo;
 	private String remark;
-	@OneToOne(targetEntity = SalaryRule.class)
+	
+	@Transient
+	@ManyToOne(fetch = FetchType.EAGER)
 	private SalaryRule salaryRuleId;
+	
+	private String salaryRule;
 }

@@ -26,8 +26,7 @@ public class FeedbackDetailsService {
     public Page<FeedbackDetails> getAllFeedbackDetailsByClientId(Integer clientId, Pageable pageable) {
         return feedbackDetailsRepository.findByClientId(clientId, pageable);
     }
-    public List<FeedbackDetails> searchDetails(String query) {
-	        List<FeedbackDetails> feedbackDetails = feedbackDetailsRepository.searchDetails(query);
-	        return feedbackDetails;
+    public Page<FeedbackDetails> searchDetails(String query, Pageable pageable) {
+    	return feedbackDetailsRepository.searchDetails(query, pageable);
 	    }
 }

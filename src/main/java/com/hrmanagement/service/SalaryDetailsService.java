@@ -59,8 +59,8 @@ public class SalaryDetailsService {
         }
         salaryDetailsRepository.deleteBySdIdAndClientId(sdId, clientId);
     }
-    public List<SalaryDetails> searchDetails(String query) {
-        List<SalaryDetails> salaryDetails = salaryDetailsRepository.searchDetails(query);
-        return salaryDetails;
+    public Page<SalaryDetails> searchDetails(String query,Pageable pageable) {
+    	return salaryDetailsRepository.searchDetails(query,pageable);
+        
     }
 }

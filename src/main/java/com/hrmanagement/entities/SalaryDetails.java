@@ -10,6 +10,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
+
 import lombok.Data;
 
 @Data
@@ -24,15 +26,23 @@ public class SalaryDetails {
     private Integer clientId;
     
 
+    @Transient
     @ManyToOne(targetEntity = Years.class)
     private Years financialYear;
+    private String year;
 
+    @Transient
     @ManyToOne(targetEntity = Months.class)
-    private Months month;
+    private Months months;
+    private String month;
     
-    @OneToOne(targetEntity = Department.class)
-    private Department department;
-
+    
+    @Transient
+	@OneToOne(targetEntity = Department.class)
+	private Department department;
+	
+	private String departmentName;
+	
     private String name;
 
     private String userCode;
@@ -96,9 +106,11 @@ public class SalaryDetails {
     private Double deduction;
 
     private Double netPay;
-
-    @OneToOne(targetEntity = SalaryMode.class)
-    private SalaryMode salaryMode;
+    @Transient
+	@OneToOne(targetEntity = SalaryMode.class)
+	private SalaryMode salaryModeId;
+	
+	private String salaryMode;
 
     private String bankAccountChequeNo;
     

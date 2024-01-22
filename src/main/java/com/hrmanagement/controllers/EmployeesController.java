@@ -88,8 +88,13 @@ public class EmployeesController {
     }
 
     @GetMapping("/search")
-    public ResponseEntity<List<Employees>> searchEmployees(@RequestParam("query") String query){
-        return ResponseEntity.ok(employeesService.searchEmployees(query));
+    public Page<Employees> searchEmployees(@RequestParam("query") String query,
+    		@RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size
+            ){
+    	Pageable pageable = PageRequest.of(page, size);
+        return employeesService.searchEmployees(query, pageable);
+        
     }
 	// post image upload
 	
@@ -115,7 +120,14 @@ public class EmployeesController {
 				InputStream resource = this.fileService.getResource(path, imageNmae);
 				response.setContentType(MediaType.IMAGE_JPEG_VALUE);
 				StreamUtils.copy(resource, response.getOutputStream());
-				}
+			}
+			//filter by department
+
+			@GetMapping("/department/{departmentName}")
+			    public List<Employees> findByDepartmentName(@PathVariable String departmentName ) {
+			        return employeesService.findByDepartmentName(departmentName);
+			    }
+			
 
 
 }

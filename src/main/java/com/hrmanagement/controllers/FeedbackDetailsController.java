@@ -41,8 +41,10 @@ public class FeedbackDetailsController {
         return new ResponseEntity<>(feedbackDetails, HttpStatus.OK);
     }
     @GetMapping("/search")
-    public ResponseEntity<List<FeedbackDetails>> searchDetais(@RequestParam("query") String query){
-        return ResponseEntity.ok(feedbackDetailsService.searchDetails(query));
+    public ResponseEntity<Page<FeedbackDetails>> searchDetais(@RequestParam("query") String query,@RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
+    	Pageable pageable = PageRequest.of(page, size);
+        return ResponseEntity.ok(feedbackDetailsService.searchDetails(query ,pageable));
     }
 
 }

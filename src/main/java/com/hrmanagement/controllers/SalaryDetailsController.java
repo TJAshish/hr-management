@@ -55,7 +55,11 @@ public class SalaryDetailsController {
         return ResponseEntity.ok("SalaryDetails deleted successfully");
     }
     @GetMapping("/search")
-    public ResponseEntity<List<SalaryDetails>> searchDetais(@RequestParam("query") String query){
-        return ResponseEntity.ok(salaryDetailsService.searchDetails(query));
+    public ResponseEntity<Page<SalaryDetails>> searchDetais(@RequestParam("query") String query,
+    		@RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
+
+        Pageable pageable = PageRequest.of(page, size);
+        return ResponseEntity.ok(salaryDetailsService.searchDetails(query, pageable));
     }
 }

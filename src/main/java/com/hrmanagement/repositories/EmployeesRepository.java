@@ -15,6 +15,7 @@ public interface EmployeesRepository extends JpaRepository<Employees, Integer> {
 	
 	Employees findByEmpIdAndClientId(Integer empId, Integer clientId);
 	List<Employees> findByClientId(Integer clientId);
+	List<Employees> findByDepartmentName(String departmentName);
 	Page<Employees> findByClientId(Integer clientId, Pageable pageable);
 	 void deleteByEmpIdAndClientId(Integer empId, Integer clientId);
 	 @Query("SELECT e FROM Employees e WHERE " +
@@ -25,8 +26,8 @@ public interface EmployeesRepository extends JpaRepository<Employees, Integer> {
 	            +
 	            "Or e.userName LIKE CONCAT('%', :query, '%')"
 	            +
-	            "Or e.departmentId LIKE CONCAT('%', :query, '%')"
+	            "Or e.departmentName LIKE CONCAT('%', :query, '%')"
 	            +
 	            "Or e.code LIKE CONCAT('%', :query, '%')")
-	    List<Employees> searchEmployees(String query);
+	    Page<Employees> searchEmployees(String query, Pageable pageable);
 }

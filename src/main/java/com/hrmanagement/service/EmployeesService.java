@@ -12,7 +12,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.ui.Model;
 
 @Service
 public class EmployeesService {
@@ -61,12 +60,18 @@ public class EmployeesService {
 	        employeesRepository.deleteByEmpIdAndClientId(empId, clientId);
 	    }
 
-	 	  public List<Employees> searchEmployees(String query) {
-	 	        List<Employees> employees = employeesRepository.searchEmployees(query);
-	 	        return employees;
+	 	  public Page<Employees> searchEmployees(String query , Pageable pageable) {
+	 		 return employeesRepository.searchEmployees(query, pageable);
+	 	         
 	 	    }
 	 	 public List<Employees> findByClientId(Integer clientId) {
 	         return employeesRepository.findByClientId(clientId);
 	     }
+	 	 
+
+	    public List<Employees> findByDepartmentName(String departmentName) {
+	        List<Employees> emp =this.employeesRepository.findByDepartmentName(departmentName);
+	        return emp;
+	    }
 
 }
