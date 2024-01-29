@@ -4,6 +4,8 @@ import com.hrmanagement.entities.LeaveDetails;
 import com.hrmanagement.exception.NotFoundException;
 import com.hrmanagement.service.LeaveDetailsService;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -25,6 +27,10 @@ public class LeaveDetailsController {
         return new ResponseEntity<>(createdLeaveDetails, HttpStatus.CREATED);
     }
 
+    @GetMapping("/all/{clientId}")
+    public List<LeaveDetails> getAllLeaveDetailsByClientId(@PathVariable("clientId") Integer clientId) {
+        return leaveDetailsService.getAllLeaveDetailsByClientId(clientId);
+    }
     @GetMapping("/{clientId}")
     public ResponseEntity<Page<LeaveDetails>> getAllLeaveDetailsByClientId(@PathVariable("clientId") Integer clientId,
                                                                           @RequestParam(defaultValue = "0") int page,

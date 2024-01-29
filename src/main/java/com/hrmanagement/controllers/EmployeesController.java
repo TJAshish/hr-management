@@ -1,6 +1,6 @@
 package com.hrmanagement.controllers;
 
-import com.hrmanagement.entities.Employees;   
+import com.hrmanagement.entities.Employees;    
 import com.hrmanagement.service.EmployeesService;
 import com.hrmanagement.service.FileService;
 

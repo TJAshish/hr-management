@@ -13,6 +13,10 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
+import com.hrmanagement.dtos.Department;
+import com.hrmanagement.dtos.SalaryMode;
+import com.hrmanagement.dtos.SalaryRule;
+
 import lombok.Data;
 
 @Entity

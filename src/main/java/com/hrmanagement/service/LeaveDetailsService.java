@@ -31,6 +31,9 @@ public class LeaveDetailsService {
     public Page<LeaveDetails> getAllLeaveDetailsByClientId(Integer clientId, Pageable pageable) {
         return leaveDetailsRepository.findAllByClientId(clientId, pageable);
     }
+    public List<LeaveDetails> getAllLeaveDetailsByClientId(Integer clientId) {
+        return leaveDetailsRepository.findAllByClientId(clientId);
+    }
 
     public Optional<LeaveDetails> getLeaveDetailsByIdAndClientId(Integer id, Integer clientId) {
         return leaveDetailsRepository.findByIdAndClientId(id, clientId);

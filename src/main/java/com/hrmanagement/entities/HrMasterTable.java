@@ -14,11 +14,11 @@ public class HrMasterTable {
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	private String department;
-	private String financialYear;
-	private String month;
-	private String salaryMode;
-	private String SalaryRule;
-	private String type;
+	private String departmentName;
+    private String salaryRule;
+    private String salaryMode;
+    private String type;
+    private String financialYear;
+    private String month;
 
 }
