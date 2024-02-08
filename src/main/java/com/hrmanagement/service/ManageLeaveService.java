@@ -43,7 +43,7 @@ public class ManageLeaveService {
 
             // Use ModelMapper to update fields
             modelMapper.map(manageLeave, updatedManageLeave);
-
+            updatedManageLeave.recalculateAvail();
             return manageLeaveRepository.save(updatedManageLeave);
         } else {
             // Throw NotFoundException when leave details with the given ID and client ID are not found
